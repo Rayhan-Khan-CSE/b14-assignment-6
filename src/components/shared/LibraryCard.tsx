@@ -4,12 +4,14 @@ import logo1 from "@/assets/SVG.png"
 import logo2 from "@/assets/SVG (1).png"
 import logo3 from "@/assets/SVG (2).png"
 import { ILibrary } from '@/types/library.type';
+import Link from 'next/link';
 interface ILibraryCardProps {
     library: ILibrary
 }
 
 const LibraryCard = ({ library }:ILibraryCardProps) => {
     return (
+        <Link href={`/DetailsPage/${library.id}`}>
         <div className="card bg-[#15171D] shadow-sm overflow-hidden">
             <figure className='w-full'>
                 <Image
@@ -40,6 +42,7 @@ const LibraryCard = ({ library }:ILibraryCardProps) => {
                 </div>
             </div>
         </div>
+        </Link>
     );
 };
 

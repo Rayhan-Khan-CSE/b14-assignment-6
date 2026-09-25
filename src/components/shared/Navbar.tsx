@@ -1,14 +1,15 @@
 import React from 'react';
 import logo from "@/assets/logo.png"
 import Image from 'next/image';
+import Link from 'next/link';
 
 const Navbar = () => {
     const links = <>
-        <li className='text-[#C2F800] font-bold bg-[#1A2312] rounded-full'><a>Workouts</a></li>
+        <li className='text-[#C2F800] font-bold bg-[#1A2312] rounded-full'><Link href="/">Workouts</Link></li>
         <li className='text-[#9CA3AF] font-bold'><a>My Plan</a></li>
     </>
     return (
-        <div className="navbar bg-base-100 shadow-sm">
+        <div className="navbar bg-base-100 shadow-sm border-b border-[#27282D]">
             <div className="navbar-start">
                 <div className="dropdown">
                     <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
