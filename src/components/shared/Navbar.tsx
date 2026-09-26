@@ -2,11 +2,12 @@ import React from 'react';
 import logo from "@/assets/logo.png"
 import Image from 'next/image';
 import Link from 'next/link';
+import CountCard from '../CountCard/page';
 
 const Navbar = () => {
     const links = <>
         <li className='text-[#C2F800] font-bold bg-[#1A2312] rounded-full'><Link href="/">Workouts</Link></li>
-        <li className='text-[#9CA3AF] font-bold'><a>My Plan</a></li>
+        <li className='text-[#9CA3AF] font-bold'><Link href={`/MyPlan`}>My Plan</Link></li>
     </>
     return (
         <div className="navbar bg-base-100 shadow-sm border-b border-[#27282D]">
@@ -28,24 +29,7 @@ const Navbar = () => {
                     {links}
                 </ul>
             </div>
-            <div className="navbar-end gap-6 mr-4">
-                <div className='flex gap-3 items-center'>
-                    <div>
-                        <p>Plan</p>
-                    </div>
-                    <div className='bg-[#C2F800] py-0.2 px-1.5 rounded-full'>
-                        <p className='text-[#000000] font-bold'>0</p>
-                    </div>
-                </div>
-                <div className='flex gap-3 items-center'>
-                    <div>
-                        <p>Saved</p>
-                    </div>
-                    <div className='py-0.2 px-1.5 rounded-full border border-[#D1D5DB]'>
-                        <p className='font-bold'>0</p>
-                    </div>
-                </div>
-            </div>
+            <CountCard/>
         </div>
     );
 };

@@ -1,6 +1,9 @@
 import { ILibrary } from '@/types/library.type';
 import React from 'react';
-import Image from 'next/image';
+import Image from 'next/image'; 
+import AddPlan from '@/components/addCard/AddPlan';
+import SaveLater from '@/components/addCard/SaveLater';
+
 interface IDetailsPage {
     params: Promise<{
         id: string;
@@ -79,8 +82,8 @@ const DetailsPage = async ({ params }: IDetailsPage) => {
                     </ol>
                 </div>
                 <div className="card-actions justify-start">
-                    <button className="btn btn-primary">Add to today's plan</button>
-                    <button className="btn btn-primary">Save for later</button>
+                    <AddPlan library={library}/>
+                    <SaveLater library={library}/>
                 </div>
             </div>
         </div>
