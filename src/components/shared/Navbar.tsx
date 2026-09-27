@@ -4,13 +4,15 @@ import Image from 'next/image';
 import Link from 'next/link';
 import CountCard from '../CountCard/page';
 
+
 const Navbar = () => {
     const links = <>
-        <li className='text-[#C2F800] font-bold bg-[#1A2312] rounded-full'><Link href="/">Workouts</Link></li>
-        <li className='text-[#9CA3AF] font-bold'><Link href={`/MyPlan`}>My Plan</Link></li>
+        <li className='text-[#C2F800] font-bold rounded-full hover:bg-[#1A2312]'><Link href="/">Workouts</Link></li>
+        <li className='text-[#9CA3AF] font-bold hover:bg-[#1A2312]'><Link href={`/MyPlan`}>My Plan</Link></li>
     </>
     return (
-        <div className="navbar bg-base-100 shadow-sm border-b border-[#27282D]">
+        <div className="border-b border-[#27282D]">
+           <div className='max-w-300 mx-auto navbar bg-base-100 shadow-sm'>
             <div className="navbar-start">
                 <div className="dropdown">
                     <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
@@ -30,6 +32,7 @@ const Navbar = () => {
                 </ul>
             </div>
             <CountCard/>
+            </div>
         </div>
     );
 };

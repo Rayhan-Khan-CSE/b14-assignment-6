@@ -4,7 +4,7 @@ import logo2 from "@/assets/banner.png"
 
 const Banner = () => {
     return (
-        <div className='flex items-center justify-between mx-6 p-12 my-16 rounded-2xl bg-[#15171D]'>
+        <div className=' max-w-300 mx-auto flex items-center justify-between p-12 my-16 rounded-2xl bg-[#15171D]'>
             <div>
                 <h4 className='font-bold text-[#C2F800]'>WORKOUT LIBRARY</h4>
                 <h1 className='font-extrabold text-5xl mt-5'>TRAIN WITH INTENT. LOG

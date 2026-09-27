@@ -10,6 +10,21 @@ import { Bounce, toast } from 'react-toastify';
 const SaveLater = ({library}:{library:ILibrary}) => {
     const {saveLater, setSaveLater} = useContext(LibraryContext);
     const handleAddPlan = () => {
+        const dupCard = saveLater.some(item => item.id === library.id);
+                if(dupCard){
+                  toast.error(`${library.name} already add to todays plan.`, {
+                position: "bottom-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: false,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "light",
+                transition: Bounce,
+                }); 
+                return; 
+                }
         setSaveLater([...saveLater,library]);
         toast.success(`${library.name} successfully add to save for later.`, {
         position: "bottom-right",

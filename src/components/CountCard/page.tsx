@@ -1,21 +1,22 @@
 "use client"
 import { LibraryContext } from '@/context/LibraryContext';
 import React, { useContext } from 'react';
+import Link from 'next/link';
 
 const CountCard = () => {
     const {addPlan, saveLater} = useContext(LibraryContext)
     console.log(addPlan,saveLater);
     return (
         <div className="navbar-end gap-6 mr-4">
-                <div className='flex gap-3 items-center'>
+                <Link href={`/MyPlan`}><div className='flex gap-3 items-center'>
                     <div>
                         <p>Plan</p>
                     </div>
                     <div className='bg-[#C2F800] py-0.2 px-1.5 rounded-full'>
                         <p className='text-[#000000] font-bold'>{addPlan.length}</p>
                     </div>
-                </div>
-                <div className='flex gap-3 items-center'>
+                </div></Link>
+                <Link href={`/MyPlan`}><div className='flex gap-3 items-center'>
                     <div>
                         <p>Saved</p>
                     </div>
@@ -23,6 +24,7 @@ const CountCard = () => {
                         <p className='font-bold'>{saveLater.length}</p>
                     </div>
                 </div>
+                </Link>
             </div>
     );
 };

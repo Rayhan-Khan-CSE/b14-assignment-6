@@ -12,7 +12,7 @@ const getLibrary = async() => {
 const Library = async() => {
     const libraryData = await getLibrary();
     return (
-        <div className='mx-6'>
+        <div className=' max-w-300 mx-auto'>
             <h2 className='font-extrabold text-[#FFFFFF] text-2xl'>THE LIBRARY</h2>
             <p className='text-[#9CA3AF]'>Twelve lifts covering every major muscle group.</p>
             <div className='grid gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 my-5'>

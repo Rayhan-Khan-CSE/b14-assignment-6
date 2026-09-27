@@ -2,21 +2,40 @@
 import { LibraryContext } from '@/context/LibraryContext';
 import React, { useContext,useState } from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
+import { Bounce, toast } from 'react-toastify';
 
 const MyPlan = () => {
-    const { addPlan, saveLater } = useContext(LibraryContext);
+    const { addPlan, saveLater, setAddPlan, setSaveLater,id, setId } = useContext(LibraryContext);
     const [active, setActive] = useState<"plan" | "saved">("plan");
+    const [sortBy, setSortBy] = useState('duration');
     const presentCards = active === "plan" ? addPlan : saveLater;
-    const totalExercise = addPlan.length;
-    const totalMinutes = addPlan.reduce((total, item) => total + item.duration,0);
-    const totalCalories = addPlan.reduce((total, item) => total + item.caloriesBurned,0);
+    const designCards = [...presentCards].sort((x,y)=>{
+        if(sortBy === 'duration'){
+            return x.duration - y.duration;
+        }
+        if(sortBy === 'calories'){
+            return x.caloriesBurned - y.caloriesBurned;
+        }
+        if(sortBy === 'rating'){
+            return Number(x.rating) - Number(y.rating);
+        }
+        if(sortBy === 'name'){
+            return x.name.localeCompare(y.name);
+        }
+        return 0;
+    });
+    const totalExercise = presentCards.length;
+    const totalMinutes = presentCards.reduce((total, item) => total + item.duration,0);
+    const totalCalories = presentCards.reduce((total, item) => total + item.caloriesBurned,0);
+
     return (
         <div>
-            <section className='m-5'>
+            <section className='m-5 max-w-300 mx-auto pl-3'>
                 <h2 className='font-bold text-2xl text-[#FFFFFF]'>MY PLAN</h2>
                 <p className='text-[#8A92A0]'>Cap of five lifts for today. Finish them, then load more.</p>
             </section>
-            <section className='grid grid-cols-3 items-start mx-5 bg-base-200 p-4 rounded-xl '>
+            <section className='max-w-300 mx-auto grid grid-cols-3 items-start bg-base-200 p-4 rounded-xl '>
                 <div className='border-r border-[#8A92A0]'>
                     <p className='text-[#8A92A0] text-sm'>Exercises</p>
                     <p className='text-2xl text-[#CCFF00] font-extrabold'>{totalExercise}</p>
@@ -30,7 +49,7 @@ const MyPlan = () => {
                     <p className='ml-5 text-[#FFFFFF] text-2xl font-extrabold'>{totalCalories}</p>
                 </div>
             </section>
-            <section className="m-5">
+            <section className="m-5 max-w-300 mx-auto">
                 <div className="flex items-center justify-between">
                     <div className="flex bg-[#15171D] border border-[#272C35] rounded-xl p-1">
                         <button
@@ -46,14 +65,15 @@ const MyPlan = () => {
                         Saved
                         </button>
                     </div>
+
+
                     <div className="flex items-center gap-2">
                         <span className="text-sm text-[#8A92A0]">
                         Sort By
                         </span>
-                        <select
+                        <select value={sortBy} onChange={(e)=> setSortBy(e.target.value)}
                             className="bg-[#15171D] border border-[#272C35] text-[#E5E7EB] 
-                             rounded-lg px-3 py-2 text-sm outline-none"
-                            defaultValue="duration">
+                             rounded-lg px-3 py-2 text-sm outline-none">
                             <option value="duration">Duration</option>
                             <option value="calories">Calories</option>
                             <option value="rating">Rating</option>
@@ -63,7 +83,24 @@ const MyPlan = () => {
                 </div>
 
                 <div className='mt-5 space-y-3'>
-                    {presentCards.map((library) => (
+                    { designCards.length === 0 ? 
+                    (
+                        <div className="mt-5 min-h-62.5 border border-dashed border-[#272C35] 
+                    rounded-xl flex flex-col items-center justify-center">
+                    <h2 className="text-white font-extrabold text-lg">
+                        NOTHING HERE YET
+                    </h2>
+                    <p className="text-[#8A92A0] text-sm mt-2">
+                        Browse the library and add a lift to get today moving.
+                    </p>
+                    <button
+                        className="mt-5 bg-[#C2F800] text-black font-bold 
+                        px-6 py-2 rounded-full text-sm">
+                    Go to workouts
+                    </button>
+                </div>
+                    )
+                    : (designCards.map((library) => (
                         <div key={library.id} className='border border-[#272C35] bg-[#15171D] rounded-xl p-3 flex justify-between items-center'>
                             <div className='flex items-center gap-4'>
                                 <Image src={library.image} alt='Image'width={30} height={20} className='w-30 h-20 object-cover rounded-xl'></Image>
@@ -77,24 +114,48 @@ const MyPlan = () => {
                                     </div>
                                 </div>
                             </div>
-                            
-                        </div>
-                    ))}
-                </div>
+                            <div className='flex items-center gap-3'>
 
-                <div className="mt-5 min-h-62.5 border border-dashed border-[#272C35] 
-                    rounded-xl flex flex-col items-center justify-center">
-                    <h2 className="text-white font-extrabold text-lg">
-                        NOTHING HERE YET
-                    </h2>
-                    <p className="text-[#8A92A0] text-sm mt-2">
-                        Browse the library and add a lift to get today moving.
-                    </p>
-                    <button
-                        className="mt-5 bg-[#C2F800] text-black font-bold 
-                        px-6 py-2 rounded-full text-sm">
-                    Go to workouts
-                    </button>
+                                <Link href={`/DetailsPage/${library.id}`} className='border border-[#39404D] text-[#E5E7EB] px-4 py-2 rounded-full text-sm'>
+                                    View Details
+                                </Link>
+                                {
+                                    active==="plan" && (
+                                        <button 
+                                        onClick={()=>{
+                                            if(!id.includes(library.id)){
+                                            setId([...id, library.id]);
+                                            toast.success(`${library.name} marked as done.`, {
+                                                    position: "bottom-right",
+                                                    autoClose: 5000,
+                                                    hideProgressBar: false,
+                                                    closeOnClick: false,
+                                                    pauseOnHover: true,
+                                                    draggable: true,
+                                                    progress: undefined,
+                                                    theme: "light",
+                                                    transition: Bounce,
+                                                    });}
+                                        }} className='bg-[#C2F800] text-black-500 px-4 py-2 rounded-full text-sm font-bold'
+                                        >
+                                            {id.includes(library.id) ? "Done" : "Mark as Done"}
+                                        </button>
+                                    )
+                                }
+                                <button onClick={()=>{
+                                    setId(id.filter(newId => newId !== library.id));
+                                    if (active === "plan"){
+                                        setAddPlan(addPlan.filter((item) => item.id !== library.id));
+                                    }
+                                    else {
+                                        setSaveLater(saveLater.filter((item) => item.id !== library.id));
+                                    }
+                                }} className='text-[#8A92A0] text-xl px-2 hover:text-[#FFFFFF]'>
+                                    X
+                                </button>
+                            </div>
+                        </div>
+                    )))}
                 </div>
                
             </section>
