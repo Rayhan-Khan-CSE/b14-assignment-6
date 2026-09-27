@@ -39,7 +39,7 @@ const AddPlan = ({library}:{library:ILibrary}) => {
         });
     }
     return (
-       <button className="btn bg-[#CCFF00] rounded-xl text-[#0F1115] " onClick={() => handleAddPlan()}><Image src={logo1} alt='button'></Image>Add to today's plan</button> 
+       <button className="btn bg-[#CCFF00] rounded-xl text-[#0F1115] " onClick={() => handleAddPlan()}><Image src={logo1} alt='button'></Image>{"Add to today's plan"}</button> 
     );
 };
 

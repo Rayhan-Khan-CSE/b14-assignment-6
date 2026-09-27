@@ -4,6 +4,12 @@ import React, { useContext,useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { Bounce, toast } from 'react-toastify';
+import logo from "@/assets/SVG (6).png"
+import { FcCheckmark } from 'react-icons/fc';
+import logo1 from "@/assets/SVG (7).png"
+import logo2 from "@/assets/SVG (8).png"
+import logo3 from "@/assets/SVG (9).png"
+
 
 const MyPlan = () => {
     const { addPlan, saveLater, setAddPlan, setSaveLater,id, setId } = useContext(LibraryContext);
@@ -56,7 +62,7 @@ const MyPlan = () => {
                             onClick={() => setActive("plan")}
                             className={`px-5 py-2 rounded-xl text-sm ${active === "plan" ? "bg-[#252A33] text-[#FFFFFF] font-bold" : "text-[#8A92A0]"}`}
                         >
-                        Today's Plan
+                        {"Today's Plan"}
                         </button>
                         <button
                             onClick={() => setActive("saved")}
@@ -108,9 +114,9 @@ const MyPlan = () => {
                                     <h2 className='text-[#FFFFFF] font-extrabold uppercase'>{library.name}</h2>
                                     <p className='text-[#8A92A0]'>{library.equipment}</p>
                                     <div className='flex gap-3 mt-2 text-sm text-[#D1D5DB]'>
-                                        <span>{library.duration} min</span>
-                                        <span>{library.caloriesBurned}</span>
-                                        <span>{library.rating}</span>
+                                        <span className='flex items-center gap-2'><Image src={logo1} alt='Img' width={10} height={10}></Image>{library.duration} min</span>
+                                        <span className='flex items-center gap-2'><Image src={logo2} alt='Img' width={10} height={10}></Image>{library.caloriesBurned}</span>
+                                        <span className='flex items-center gap-2'><Image src={logo3} alt='Img' width={10} height={10}></Image>{library.rating}</span>
                                     </div>
                                 </div>
                             </div>
@@ -136,9 +142,9 @@ const MyPlan = () => {
                                                     theme: "light",
                                                     transition: Bounce,
                                                     });}
-                                        }} className='bg-[#C2F800] text-black-500 px-4 py-2 rounded-full text-sm font-bold'
+                                        }} className='flex gap-2 items-center bg-[#C2F800] text-black px-4 py-2 rounded-full text-sm font-bold'
                                         >
-                                            {id.includes(library.id) ? "Done" : "Mark as Done"}
+                                            <FcCheckmark />{id.includes(library.id) ? "Done" : "Mark as Done"}
                                         </button>
                                     )
                                 }
@@ -151,7 +157,7 @@ const MyPlan = () => {
                                         setSaveLater(saveLater.filter((item) => item.id !== library.id));
                                     }
                                 }} className='text-[#8A92A0] text-xl px-2 hover:text-[#FFFFFF]'>
-                                    X
+                                    <Image src={logo} alt='Image' width={30} height={30}></Image>
                                 </button>
                             </div>
                         </div>
