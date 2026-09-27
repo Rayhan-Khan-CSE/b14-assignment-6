@@ -107,8 +107,8 @@ const MyPlan = () => {
                 </div>
                     )
                     : (designCards.map((library) => (
-                        <div key={library.id} className='border border-[#272C35] bg-[#15171D] rounded-xl p-3 flex justify-between items-center'>
-                            <div className='flex items-center gap-4'>
+                        <div key={library.id} className=' flex-col lg:flex-row border border-[#272C35] bg-[#15171D] rounded-xl p-3 flex justify-between items-center'>
+                            <div className='flex items-center gap-4 '>
                                 <Image src={library.image} alt='Image'width={30} height={20} className='w-30 h-20 object-cover rounded-xl'></Image>
                                 <div>
                                     <h2 className='text-[#FFFFFF] font-extrabold uppercase'>{library.name}</h2>
@@ -120,7 +120,7 @@ const MyPlan = () => {
                                     </div>
                                 </div>
                             </div>
-                            <div className='flex items-center gap-3'>
+                            <div className='flex items-center gap-3 my-6 lg:my-0'>
 
                                 <Link href={`/DetailsPage/${library.id}`} className='border border-[#39404D] text-[#E5E7EB] px-4 py-2 rounded-full text-sm'>
                                     View Details
