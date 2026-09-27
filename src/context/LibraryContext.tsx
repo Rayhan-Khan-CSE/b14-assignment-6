@@ -6,6 +6,7 @@ export const LibraryContext = createContext({});
 const LibraryProvider = ({children}:{children:ReactNode}) => {
     const [addPlan, setAddPlan] = useState<ILibrary[]>([]);
     const [saveLater, setSaveLater] = useState<ILibrary[]>([]);
+    const [id, setId] = useState<number[]>([]);
     
     return (
     <LibraryContext.Provider value={{
@@ -13,6 +14,8 @@ const LibraryProvider = ({children}:{children:ReactNode}) => {
         setAddPlan,
         saveLater,
         setSaveLater,
+        id,
+        setId,
     }}> {children} </LibraryContext.Provider>
 );
 };

@@ -1,10 +1,15 @@
 "use client"
 import { LibraryContext } from '@/context/LibraryContext';
-import React, { useContext } from 'react';
+import React, { useContext,useState } from 'react';
+import Image from 'next/image';
 
 const MyPlan = () => {
-    const { addPlan, saveLater } = useContext(LibraryContext)
-    console.log(addPlan, saveLater);
+    const { addPlan, saveLater } = useContext(LibraryContext);
+    const [active, setActive] = useState<"plan" | "saved">("plan");
+    const presentCards = active === "plan" ? addPlan : saveLater;
+    const totalExercise = addPlan.length;
+    const totalMinutes = addPlan.reduce((total, item) => total + item.duration,0);
+    const totalCalories = addPlan.reduce((total, item) => total + item.caloriesBurned,0);
     return (
         <div>
             <section className='m-5'>
@@ -14,27 +19,29 @@ const MyPlan = () => {
             <section className='grid grid-cols-3 items-start mx-5 bg-base-200 p-4 rounded-xl '>
                 <div className='border-r border-[#8A92A0]'>
                     <p className='text-[#8A92A0] text-sm'>Exercises</p>
-                    <p className='text-2xl text-[#CCFF00] font-extrabold'>2</p>
+                    <p className='text-2xl text-[#CCFF00] font-extrabold'>{totalExercise}</p>
                 </div>
                 <div className='border-r border-[#8A92A0]'>
                     <p className='ml-5 text-[#8A92A0] text-sm'>Minutes</p>
-                    <p className='ml-5 text-[#FFFFFF] text-2xl font-extrabold'>23</p>
+                    <p className='ml-5 text-[#FFFFFF] text-2xl font-extrabold'>{totalMinutes}</p>
                 </div>
                 <div>
                     <p className='ml-5 text-[#8A92A0] text-sm'>Calories</p>
-                    <p className='ml-5 text-[#FFFFFF] text-2xl font-extrabold'>190</p>
+                    <p className='ml-5 text-[#FFFFFF] text-2xl font-extrabold'>{totalCalories}</p>
                 </div>
             </section>
             <section className="m-5">
                 <div className="flex items-center justify-between">
                     <div className="flex bg-[#15171D] border border-[#272C35] rounded-xl p-1">
                         <button
-                            className="px-5 py-2 rounded-lg text-sm text-[#8A92A0]"
+                            onClick={() => setActive("plan")}
+                            className={`px-5 py-2 rounded-xl text-sm ${active === "plan" ? "bg-[#252A33] text-[#FFFFFF] font-bold" : "text-[#8A92A0]"}`}
                         >
                         Today's Plan
                         </button>
                         <button
-                            className="px-7 py-2 rounded-lg bg-[#252A33] text-white text-sm font-bold"
+                            onClick={() => setActive("saved")}
+                            className={`px-6 py-2 rounded-xl text-sm ${active === "saved" ? "bg-[#252A33] text-[#FFFFFF] font-bold" : "text-[#8A92A0]"}`}
                         >
                         Saved
                         </button>
@@ -54,6 +61,27 @@ const MyPlan = () => {
                         </select>
                     </div>
                 </div>
+
+                <div className='mt-5 space-y-3'>
+                    {presentCards.map((library) => (
+                        <div key={library.id} className='border border-[#272C35] bg-[#15171D] rounded-xl p-3 flex justify-between items-center'>
+                            <div className='flex items-center gap-4'>
+                                <Image src={library.image} alt='Image'width={30} height={20} className='w-30 h-20 object-cover rounded-xl'></Image>
+                                <div>
+                                    <h2 className='text-[#FFFFFF] font-extrabold uppercase'>{library.name}</h2>
+                                    <p className='text-[#8A92A0]'>{library.equipment}</p>
+                                    <div className='flex gap-3 mt-2 text-sm text-[#D1D5DB]'>
+                                        <span>{library.duration} min</span>
+                                        <span>{library.caloriesBurned}</span>
+                                        <span>{library.rating}</span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                        </div>
+                    ))}
+                </div>
+
                 <div className="mt-5 min-h-62.5 border border-dashed border-[#272C35] 
                     rounded-xl flex flex-col items-center justify-center">
                     <h2 className="text-white font-extrabold text-lg">
@@ -68,6 +96,7 @@ const MyPlan = () => {
                     Go to workouts
                     </button>
                 </div>
+               
             </section>
         </div>
     );
